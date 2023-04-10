@@ -1,16 +1,19 @@
-import { useState } from 'react'
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import { useState } from 'react'
 
 interface Props {
   type: 'password' | 'text' | 'email'
   name: string
+  label: string
+  register: any
+  errors?: any
 }
 
-export default function DefaultTextField({ type, name }: Props) {
+export default function DefaultTextField({ name, type, label, register, errors }: Props) {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => {
@@ -19,11 +22,14 @@ export default function DefaultTextField({ type, name }: Props) {
 
   return (
     <TextField
-      name={name}
+      id={name}
       type={showPassword ? 'text' : type}
-      label={name}
+      label={label}
       variant="outlined"
       fullWidth
+      {...register(name)}
+      error={!!errors[name]}
+      helperText={errors[name] ? errors[name].message : null}
       InputProps={{
         endAdornment:
           type === 'password' ? (
