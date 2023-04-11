@@ -12,6 +12,8 @@ type UserData = {
   // confirmNewPassword?: string
 }
 
+type Movies = {}
+
 async function registerUser(user: UserData): Promise<UserData> {
   const response = await axios.post(`${URL}/register`, user)
   return response.data
@@ -26,13 +28,44 @@ async function loginUser(user: Omit<UserData, 'name'>): Promise<Omit<UserData, '
   return response.data
 }
 
+async function getUser(): Promise<UserData> {
+  const response = await axios.get(`${URL}/user`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
+async function updateUser(user: UserData): Promise<UserData> {
+  const response = await axios.put<UserData>(
+    `${URL}/user`,
+    { name: user.name, email: user.email, password: user.password },
+    {
+      headers: {
+        Authorization: `Bearer ${getItem('token')}`
+      }
+    }
+  )
+
+  return response.data
+}
+
+async function getMovies() {
+  const response = await axios.get(`${URL}/movies`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
 export const api = {
   registerUser,
-  loginUser
-  // getUser,
-  // updateUser,
-  // getComments,
-  // registerComment,
-  // updateComment,
-  // deleteComment
+  loginUser,
+  getUser,
+  updateUser,
+  getMovies
 }
