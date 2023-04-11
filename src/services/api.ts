@@ -7,7 +7,7 @@ type UserData = {
   id: number
   name: string
   email: string
-  // password: string
+  password: string
   // newPassword?: string
   // confirmNewPassword?: string
 }
@@ -17,9 +17,18 @@ async function registerUser(user: UserData): Promise<UserData> {
   return response.data
 }
 
+async function loginUser(user: Omit<UserData, 'name'>): Promise<Omit<UserData, 'name'>> {
+  const response = await axios.post(`${URL}/login`, user)
+
+  const { token } = response.data
+  setItem('token', token)
+
+  return response.data
+}
+
 export const api = {
-  registerUser
-  // loginUser,
+  registerUser,
+  loginUser
   // getUser,
   // updateUser,
   // getComments,
