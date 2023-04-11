@@ -1,15 +1,13 @@
 import LogoutIcon from '@mui/icons-material/Logout'
-import { Typography, IconButton, Switch, Paper } from '@mui/material'
+import { Switch, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router'
 import { api } from '../../services/api'
-import { logOut } from '../../utils/storage'
 import FormUser from '../FormUser'
-import { CustomAvatar, CustomBox, HeaderContainer, IconLogout } from './styles'
 import ModalLogout from '../ModalLogout'
-import { InputBase } from '@mui/material'
 import SearchField from '../SearchField'
+import { CustomAvatar, CustomBox, HeaderContainer, IconLogout } from './styles'
 
 export default function Header() {
   const [openUserForm, setOpenUserForm] = useState(false)
