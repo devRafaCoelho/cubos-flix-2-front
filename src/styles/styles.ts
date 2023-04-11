@@ -3,26 +3,31 @@ import { css } from '@mui/styled-engine'
 
 export const MainContainer = styled(Container)`
   ${({ theme }) => css`
-    width: 100%;
     min-height: 100vh;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(to bottom, ${theme.palette.primary.light}, ${theme.palette.primary.main});
+    background: linear-gradient(
+      to bottom,
+      ${theme.palette.primary.light},
+      ${theme.palette.primary.main}
+    );
   `}
 `
 
 export const FormContainer = styled(Container)`
   ${({ theme }) => css`
-    min-width: 500px;
-    margin: auto 20px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto 10px;
     padding: 40px 20px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 30px;
     position: relative;
 
@@ -33,8 +38,34 @@ export const FormContainer = styled(Container)`
       color: ${theme.palette.primary.main};
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 350px) {
       padding: 20px 10px;
     }
   `}
+`
+
+export const ContainerModal = styled(Container)`
+  ${({ theme }) => css`
+    min-height: 100vh;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: scroll;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: ${theme.palette.grey[100]};
+  `}
+`
+
+export const CustomCloseIcon = styled('svg')`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
 `

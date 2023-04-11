@@ -26,11 +26,35 @@ async function loginUser(user: Omit<UserData, 'name'>): Promise<Omit<UserData, '
   return response.data
 }
 
+async function getUser(): Promise<UserData> {
+  const response = await axios.get(`${URL}/user`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
+async function updateUser(user: UserData): Promise<UserData> {
+  const response = await axios.put<UserData>(
+    `${URL}/user`,
+    { name: user.name, email: user.email, password: user.password },
+    {
+      headers: {
+        Authorization: `Bearer ${getItem('token')}`
+      }
+    }
+  )
+
+  return response.data
+}
+
 export const api = {
   registerUser,
-  loginUser
-  // getUser,
-  // updateUser,
+  loginUser,
+  getUser,
+  updateUser
   // getComments,
   // registerComment,
   // updateComment,

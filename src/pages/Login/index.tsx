@@ -63,7 +63,7 @@ export default function LoginPage() {
 
   return (
     <MainContainer maxWidth={false} disableGutters>
-      <FormContainer maxWidth="lg" disableGutters as="form" onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer disableGutters as="form" onSubmit={handleSubmit(onSubmit)}>
         <Typography component="h1" variant="h1">
           Faça seu Login!
         </Typography>

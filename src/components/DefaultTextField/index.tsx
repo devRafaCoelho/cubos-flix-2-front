@@ -3,6 +3,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
+
 import { useState } from 'react'
 
 interface Props {
@@ -34,7 +35,9 @@ export default function DefaultTextField({ name, type, label, register, errors }
         endAdornment:
           type === 'password' ? (
             <InputAdornment position="end">
-              <IconButton onClick={handleClickShowPassword}>{showPassword ? <VisibilityOff /> : <Visibility />}</IconButton>
+              <IconButton onClick={handleClickShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
             </InputAdornment>
           ) : null
       }}

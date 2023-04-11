@@ -1,41 +1,50 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
-import { Link, useNavigate } from 'react-router-dom'
-import DefaultTextField from '../../components/DefaultTextField'
-import { schemaRegisterUser } from '../../schemas/schemas'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { schemaUpdateUser } from '../../schemas/schemas'
 import { api } from '../../services/api'
-import { FormContainer, MainContainer } from '../../styles/styles'
+import { ContainerModal, CustomCloseIcon, FormContainer } from '../../styles/styles'
+import { Button, Typography } from '@mui/material'
+import DefaultTextField from '../DefaultTextField'
+import CloseIcon from '@mui/icons-material/Close'
 
 type UserData = {
   id: number
   name: string
   email: string
   password: string
+  newPassword?: string
+  confirmNewPassword?: string
 }
 
-export default function RegisterPage() {
-  const navigate = useNavigate()
+export default function FormUser({ close }: { close: () => void }) {
+  const { data } = useQuery('user-data', api.getUser)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError
+    setError,
+    setValue
   } = useForm<UserData>({
-    resolver: yupResolver(schemaRegisterUser),
+    resolver: yupResolver(schemaUpdateUser),
     defaultValues: {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      newPassword: undefined,
+      confirmNewPassword: undefined
     }
   })
 
-  const { mutate } = useMutation(api.registerUser, {
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation(api.updateUser, {
     onSuccess: () => {
-      navigate('/login')
+      queryClient.invalidateQueries('user-data')
+      close()
     },
     onError: (error: AxiosError<any>) => {
       if ((error as any).response.data?.error) {
@@ -63,11 +72,18 @@ export default function RegisterPage() {
     mutate(data)
   }
 
+  useEffect(() => {
+    if (data) {
+      setValue('name', data.name)
+      setValue('email', data.email)
+    }
+  }, [data])
   return (
-    <MainContainer maxWidth={false} disableGutters>
+    <ContainerModal maxWidth={false} disableGutters>
       <FormContainer disableGutters as="form" onSubmit={handleSubmit(onSubmit)}>
+        <CustomCloseIcon as={CloseIcon} onClick={close} />
         <Typography component="h1" variant="h1">
-          Cadastre-se!
+          Edite seus Dados
         </Typography>
 
         <DefaultTextField
@@ -95,21 +111,25 @@ export default function RegisterPage() {
         />
 
         <DefaultTextField
-          name="confirmPassword"
+          name="newPassword"
           type="password"
-          label="Confirmar Senha"
+          label="Nova Senha"
+          register={register}
+          errors={errors}
+        />
+
+        <DefaultTextField
+          name="confirmNewPassword"
+          type="password"
+          label="Confirmar Nova Senha"
           register={register}
           errors={errors}
         />
 
         <Button type="submit" variant="contained">
-          Finalizar Cadastro
+          Finalizar
         </Button>
-
-        <Typography component="p" variant="subtitle1">
-          Já possui uma conta? <Link to="/login">Faça o Login!</Link>
-        </Typography>
       </FormContainer>
-    </MainContainer>
+    </ContainerModal>
   )
 }
