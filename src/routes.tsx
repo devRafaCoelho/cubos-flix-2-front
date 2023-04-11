@@ -24,6 +24,7 @@ export default function MainRoutes() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
+        <GlobalStyles />
         <Routes>
           <Route path="*" element={<Navigate to="/register" />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -32,7 +33,6 @@ export default function MainRoutes() {
             <Route path="/home" element={<HomePage />} />
           </Route>
         </Routes>
-        <GlobalStyles />
       </ThemeProvider>
     </QueryClientProvider>
   )
