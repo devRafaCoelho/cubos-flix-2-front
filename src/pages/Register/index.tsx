@@ -70,10 +70,37 @@ export default function RegisterPage() {
           Cadastre-se!
         </Typography>
 
-        <DefaultTextField name="name" type="text" label="Nome" register={register} errors={errors} />
-        <DefaultTextField name="email" type="email" label="E-mail" register={register} errors={errors} />
-        <DefaultTextField name="password" type="password" label="Senha" register={register} errors={errors} />
-        <DefaultTextField name="confirmPassword" type="password" label="Confirmar Senha" register={register} errors={errors} />
+        <DefaultTextField
+          name="name"
+          type="text"
+          label="Nome"
+          register={register}
+          errors={errors}
+        />
+
+        <DefaultTextField
+          name="email"
+          type="email"
+          label="E-mail"
+          register={register}
+          errors={errors}
+        />
+
+        <DefaultTextField
+          name="password"
+          type="password"
+          label="Senha"
+          register={register}
+          errors={errors}
+        />
+
+        <DefaultTextField
+          name="confirmPassword"
+          type="password"
+          label="Confirmar Senha"
+          register={register}
+          errors={errors}
+        />
 
         <Button type="submit" variant="contained">
           Finalizar Cadastro
