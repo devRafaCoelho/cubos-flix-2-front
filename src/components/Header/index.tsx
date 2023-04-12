@@ -1,18 +1,14 @@
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Switch, Typography } from '@mui/material'
-import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router'
+import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
-import FormUser from '../FormUser'
-import ModalLogout from '../ModalLogout'
 import SearchField from '../SearchField'
 import { CustomAvatar, CustomBox, HeaderContainer, IconLogout } from './styles'
+import { useEffect } from 'react'
 
 export default function Header() {
-  const [openUserForm, setOpenUserForm] = useState(false)
-  const [openModalLogout, setOpenModalLogout] = useState(false)
-  const navigate = useNavigate()
+  const { openModalLogout, setOpenModalLogout, openUserForm, setOpenUserForm } = useAppContext()
   const { data } = useQuery('user-data', api.getUser)
 
   const avatar = data ? data.name.split(' ') : []
@@ -20,6 +16,11 @@ export default function Header() {
     avatar.length > 1
       ? avatar[0].charAt(0).toUpperCase() + avatar[1].charAt(0).toUpperCase()
       : avatar[0]?.charAt(0).toUpperCase()
+
+  useEffect(() => {
+    setOpenModalLogout(false)
+    setOpenUserForm(false)
+  }, [])
 
   return (
     <HeaderContainer maxWidth={false} disableGutters>
@@ -39,9 +40,6 @@ export default function Header() {
         </CustomAvatar>
         <IconLogout as={LogoutIcon} onClick={() => setOpenModalLogout(!openModalLogout)} />
       </CustomBox>
-
-      {openModalLogout && <ModalLogout close={() => setOpenModalLogout(!openModalLogout)} />}
-      {openUserForm && <FormUser close={() => setOpenUserForm(!openUserForm)} />}
     </HeaderContainer>
   )
 }

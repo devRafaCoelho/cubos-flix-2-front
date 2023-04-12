@@ -10,6 +10,7 @@ export const HeaderContainer = styled(Container)`
     align-items: center;
     justify-content: space-between;
     position: sticky;
+    top: 0;
     background-color: ${theme.palette.primary.main};
 
     @media screen and (max-width: 615px) {

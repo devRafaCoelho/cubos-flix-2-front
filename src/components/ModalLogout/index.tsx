@@ -1,8 +1,8 @@
 import { Button, Typography } from '@mui/material'
-import { ContainerModal, CustomBox } from './styles'
+import { CustomBox } from './styles'
 import { logOut } from '../../utils/storage'
 import { useNavigate } from 'react-router'
-import { FormContainer } from '../../styles/styles'
+import { ContainerModal, FormContainer } from '../../styles/styles'
 
 export default function ModalLogout({ close }: { close: () => void }) {
   const navigate = useNavigate()
