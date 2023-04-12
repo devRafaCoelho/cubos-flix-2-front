@@ -7,8 +7,8 @@ type AppContextType = {
   setOpenModalLogout: (value: boolean) => void
   openMovieModal: boolean
   setOpenMovieModal: (value: boolean) => void
-  selectedMovieId: number | null
-  setSelectedMovieId: (value: number) => void
+  selectedMovieId: string | null
+  setSelectedMovieId: (value: string) => void
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -18,7 +18,7 @@ export const AppContext = createContext<AppContextType>({
   setOpenModalLogout: () => {},
   openMovieModal: false,
   setOpenMovieModal: () => {},
-  selectedMovieId: 0,
+  selectedMovieId: '',
   setSelectedMovieId: () => {}
 })
 
@@ -26,7 +26,7 @@ export default function AppProvider({ children }: any) {
   const [openUserForm, setOpenUserForm] = useState(false)
   const [openModalLogout, setOpenModalLogout] = useState(false)
   const [openMovieModal, setOpenMovieModal] = useState(false)
-  const [selectedMovieId, setSelectedMovieId] = useState(0)
+  const [selectedMovieId, setSelectedMovieId] = useState('')
 
   return (
     <AppContext.Provider

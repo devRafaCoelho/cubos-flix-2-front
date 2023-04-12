@@ -18,7 +18,7 @@ import useAppContext from '../../hooks/useAppContex'
 import MovieModal from '../MovieModal'
 
 type MovieProps = {
-  id: number
+  id: string
   title: string
   vote_average: number
   poster_path: string
@@ -89,7 +89,13 @@ export default function PaginatedMovies() {
       )}
 
       {openMovieModal && selectedMovieId !== null && (
-        <MovieModal idMovie={selectedMovieId} close={() => setOpenMovieModal(!openMovieModal)} />
+        <MovieModal
+          idMovie={selectedMovieId}
+          close={() => {
+            setSelectedMovieId('')
+            setOpenMovieModal(!openMovieModal)
+          }}
+        />
       )}
     </>
   )
