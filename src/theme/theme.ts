@@ -9,7 +9,8 @@ export const theme = createTheme({
       contrastText: '#fff'
     },
     grey: {
-      100: 'rgba(145, 154, 150, 0.3)'
+      100: 'rgba(145, 154, 150, 0.3)',
+      200: 'rgba(0, 0, 0, 0.8);'
     }
   },
   typography: {
@@ -30,6 +31,12 @@ export const theme = createTheme({
       fontWeight: 400,
       fontSize: '0.875rem',
       lineHeight: '1.125rem'
+    },
+    subtitle2: {
+      fontFamily: 'Nunito',
+      fontWeight: 700,
+      fontSize: '1rem',
+      lineHeight: '1.5rem'
     }
   }
 })
