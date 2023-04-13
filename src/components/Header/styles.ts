@@ -11,6 +11,7 @@ export const HeaderContainer = styled(Container)`
     justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 10;
     background-color: ${theme.palette.primary.main};
 
     @media screen and (max-width: 615px) {
@@ -35,7 +36,7 @@ export const CustomAvatar = styled(Avatar)`
   ${({ theme }) => css`
     width: 55px;
     height: 55px;
-    /* color: white; */
+    background-color: ${theme.palette.grey[400]};
     cursor: pointer;
   `}
 `

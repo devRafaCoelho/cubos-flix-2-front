@@ -5,31 +5,39 @@ type MovieProps = {
   title: string
   vote_average: number
   poster_path: string
+  dark?: boolean
+}
+
+type IconProps = {
+  dark?: boolean
+  shouldHide: boolean
 }
 
 export const PaginatedMoviesContainer = styled(Container)`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 24px;
   position: relative;
 `
 
 export const MovieCard = styled(Box)<MovieProps>`
-  position: relative;
-  width: 168px;
-  min-height: 301px;
+  ${({ theme, poster_path, dark }) => css`
+    position: relative;
+    width: 168px;
+    min-height: 301px;
 
-  background-image: ${({ poster_path }) =>
-    `url(http://image.tmdb.org/t/p/original/${poster_path})`};
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
+    background-image: ${`url(http://image.tmdb.org/t/p/original/${poster_path})`};
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px ${dark ? theme.palette.grey[600] : theme.palette.grey[900]};
 
-  &:hover {
-    transform: scale(1.03);
-    transition: transform 0.3s ease-in-out;
-  }
+    &:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease-in-out;
+    }
+  `}
 `
 
 export const InfoContainer = styled(Box)`
@@ -42,7 +50,7 @@ export const InfoContainer = styled(Box)`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${theme.palette.grey[200]};
+    background-color: ${theme.palette.grey[800]};
   `}
 `
 
@@ -53,14 +61,22 @@ export const TitleMovie = styled(Typography)`
   text-overflow: ellipsis;
 `
 
-export const IconPrev = styled('svg')`
-  position: absolute;
-  left: -40px;
+export const IconPrev = styled('svg')<IconProps>`
+  ${({ theme, dark, shouldHide }) => css`
+    position: absolute;
+    left: -40px;
+    display: ${shouldHide ? 'none' : 'flex'};
+    color: ${dark ? theme.palette.common.white : theme.palette.common.black};
+  `}
 `
 
-export const IconNext = styled('svg')`
-  position: absolute;
-  right: -40px;
+export const IconNext = styled('svg')<IconProps>`
+  ${({ theme, dark, shouldHide }) => css`
+    position: absolute;
+    right: -40px;
+    display: ${shouldHide ? 'none' : 'flex'};
+    color: ${dark ? theme.palette.common.white : theme.palette.common.black};
+  `}
 `
 
 export const Wrapper = styled(Box)`

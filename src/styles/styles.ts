@@ -1,4 +1,4 @@
-import { Container, styled } from '@mui/material'
+import { Container, Box, styled } from '@mui/material'
 import { css } from '@mui/styled-engine'
 
 export const MainContainer = styled(Container)`
@@ -54,12 +54,13 @@ export const ContainerModal = styled(Container)`
     bottom: 0;
     left: 0;
     overflow-y: scroll;
+    z-index: 15;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: ${theme.palette.grey[200]};
+    background-color: ${theme.palette.grey[800]};
     backdrop-filter: blur(2px);
   `}
 `

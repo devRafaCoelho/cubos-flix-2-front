@@ -85,7 +85,9 @@ export default function LoginPage() {
         />
 
         <Button type="submit" variant="contained">
-          Entrar
+          <Typography component="span" variant="body1">
+            Entrar
+          </Typography>
         </Button>
 
         <Typography component="p" variant="subtitle1">
