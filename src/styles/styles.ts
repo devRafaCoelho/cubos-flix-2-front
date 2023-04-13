@@ -59,7 +59,7 @@ export const ContainerModal = styled(Container)`
     justify-content: center;
     align-items: center;
 
-    background-color: ${theme.palette.grey[100]};
+    background-color: ${theme.palette.grey[200]};
     backdrop-filter: blur(2px);
   `}
 `

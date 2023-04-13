@@ -10,12 +10,6 @@ type UserData = {
   password: string
 }
 
-type MovieData = {
-  id: number
-  title: string
-  release_date: string
-}
-
 async function registerUser(user: UserData): Promise<UserData> {
   const response = await axios.post(`${URL}/register`, user)
   return response.data
@@ -64,7 +58,7 @@ async function listMovies() {
   return response.data
 }
 
-async function getMovie(movieId: number): Promise<unknown> {
+async function getMovie(movieId: string): Promise<unknown> {
   const response = await axios.get(`${URL}/movies/${movieId}`, {
     headers: {
       Authorization: `Bearer ${getItem('token')}`
