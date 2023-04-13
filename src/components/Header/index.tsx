@@ -6,10 +6,12 @@ import { api } from '../../services/api'
 import SearchField from '../SearchField'
 import { CustomAvatar, CustomBox, HeaderContainer, IconLogout } from './styles'
 import { useEffect } from 'react'
+import { getItem, setItem } from '../../utils/storage'
 
 export default function Header() {
   const { openModalLogout, setOpenModalLogout, openUserForm, setOpenUserForm } = useAppContext()
   const { data } = useQuery('user-data', api.getUser)
+  const { setThemeLocalStorage } = useAppContext()
 
   const avatar = data ? data.name.split(' ') : []
   const avatarInitials =
@@ -22,10 +24,17 @@ export default function Header() {
     setOpenUserForm(false)
   }, [])
 
+  function handleTheme() {
+    const theme = getItem('theme') === 'light' ? 'dark' : 'light'
+
+    setItem('theme', theme)
+    setThemeLocalStorage(theme)
+  }
+
   return (
     <HeaderContainer maxWidth={false} disableGutters>
       <CustomBox>
-        <Switch name="loading" color="default" />
+        <Switch name="loading" color="default" onClick={() => handleTheme()} />
         <Typography component="h1" variant="h1" color="white">
           CUBOS-FLIX
         </Typography>

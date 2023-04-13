@@ -12,19 +12,22 @@ export const theme = createTheme({
       main: '#E183C8'
     },
     grey: {
-      100: 'rgba(145, 154, 150, 0.3)',
-      200: 'rgba(0, 0, 0, 0.8);'
+      500: 'rgba(255, 255, 255, 0.15)',
+      600: '#454545',
+      700: '#242424',
+      800: 'rgba(0, 0, 0, 0.8);',
+      900: 'rgba(0, 0, 0, 0.15);'
     }
   },
   typography: {
     h1: {
-      fontFamily: 'Montserrat',
+      fontFamily: 'Nunito',
       fontWeight: 700,
       fontSize: '1.5rem',
       lineHeight: '1.95rem'
     },
     h2: {
-      fontFamily: 'Montserrat',
+      fontFamily: 'Nunito',
       fontWeight: 500,
       fontSize: '1.5rem',
       lineHeight: '1.95rem'
@@ -41,6 +44,18 @@ export const theme = createTheme({
       fontSize: '1.25rem',
       lineHeight: '1.875rem'
     },
+    h5: {
+      fontFamily: 'Nunito',
+      fontWeight: 500,
+      fontSize: '0.75rem',
+      lineHeight: '1.125rem'
+    },
+    h6: {
+      fontFamily: 'Nunito',
+      fontWeight: 500,
+      fontSize: '1rem',
+      lineHeight: '1.5rem'
+    },
     subtitle1: {
       fontFamily: 'Nunito',
       fontWeight: 400,
@@ -50,6 +65,12 @@ export const theme = createTheme({
     subtitle2: {
       fontFamily: 'Nunito',
       fontWeight: 700,
+      fontSize: '1rem',
+      lineHeight: '1.5rem'
+    },
+    body1: {
+      fontFamily: 'Nunito',
+      fontWeight: 400,
       fontSize: '1rem',
       lineHeight: '1.5rem'
     },

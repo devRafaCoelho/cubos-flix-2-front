@@ -103,7 +103,9 @@ export default function RegisterPage() {
         />
 
         <Button type="submit" variant="contained">
-          Finalizar Cadastro
+          <Typography component="span" variant="body1">
+            Finalizar Cadastro
+          </Typography>
         </Button>
 
         <Typography component="p" variant="subtitle1">

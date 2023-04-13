@@ -1,17 +1,9 @@
-import { useQuery } from 'react-query'
-import { ContainerModal } from '../../styles/styles'
-import { api } from '../../services/api'
-import { Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import {
-  BackgroundBox,
-  BoxAverage,
-  BoxGengres,
-  BoxImage,
-  ContainerContent,
-  CustomBox,
-  Icon
-} from './styles'
+import { Typography } from '@mui/material'
+import { useQuery } from 'react-query'
+import { api } from '../../services/api'
+import { ContainerModal } from '../../styles/styles'
+import { BackgroundBox, BoxGengres, BoxImage, ContainerContent, CustomBox, Icon } from './styles'
 
 type MovieModalProps = {
   idMovie: string

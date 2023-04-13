@@ -127,7 +127,9 @@ export default function FormUser({ close }: { close: () => void }) {
         />
 
         <Button type="submit" variant="contained">
-          Finalizar
+          <Typography component="span" variant="body1">
+            Finalizar
+          </Typography>
         </Button>
       </FormContainer>
     </ContainerModal>

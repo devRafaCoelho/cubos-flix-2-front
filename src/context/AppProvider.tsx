@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { getItem } from '../utils/storage'
 
 type AppContextType = {
   openUserForm: boolean
@@ -9,6 +10,8 @@ type AppContextType = {
   setOpenMovieModal: (value: boolean) => void
   selectedMovieId: string | null
   setSelectedMovieId: (value: string) => void
+  themeLocalStorage: string
+  setThemeLocalStorage: (value: string) => void
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -19,7 +22,9 @@ export const AppContext = createContext<AppContextType>({
   openMovieModal: false,
   setOpenMovieModal: () => {},
   selectedMovieId: '',
-  setSelectedMovieId: () => {}
+  setSelectedMovieId: () => {},
+  themeLocalStorage: 'light',
+  setThemeLocalStorage: () => {}
 })
 
 export default function AppProvider({ children }: any) {
@@ -27,6 +32,7 @@ export default function AppProvider({ children }: any) {
   const [openModalLogout, setOpenModalLogout] = useState(false)
   const [openMovieModal, setOpenMovieModal] = useState(false)
   const [selectedMovieId, setSelectedMovieId] = useState('')
+  const [themeLocalStorage, setThemeLocalStorage] = useState(getItem('theme') || 'light')
 
   return (
     <AppContext.Provider
@@ -38,7 +44,9 @@ export default function AppProvider({ children }: any) {
         openMovieModal,
         setOpenMovieModal,
         selectedMovieId,
-        setSelectedMovieId
+        setSelectedMovieId,
+        themeLocalStorage,
+        setThemeLocalStorage
       }}
     >
       {children}

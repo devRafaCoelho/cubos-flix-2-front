@@ -27,7 +27,13 @@ type MovieProps = {
 export default function PaginatedMovies() {
   const { data } = useQuery('movies-data', api.listMovies)
   const [page, setPage] = useState(0)
-  const { openMovieModal, setOpenMovieModal, selectedMovieId, setSelectedMovieId } = useAppContext()
+  const {
+    openMovieModal,
+    setOpenMovieModal,
+    selectedMovieId,
+    setSelectedMovieId,
+    themeLocalStorage
+  } = useAppContext()
 
   const totalPages = Math.ceil((data?.results.length || 0) / 5)
 
@@ -52,7 +58,8 @@ export default function PaginatedMovies() {
             onClick={handlePrevClick}
             cursor="pointer"
             fontSize="large"
-            sx={{ display: page === 0 ? 'none' : 'flex' }}
+            dark={themeLocalStorage === 'dark'}
+            shouldHide={page === 0}
           />
           {filteredMovies.map((movie: MovieProps) => (
             <MovieCard
@@ -60,6 +67,7 @@ export default function PaginatedMovies() {
               title={movie.title}
               vote_average={movie.vote_average}
               poster_path={movie.poster_path}
+              dark={themeLocalStorage === 'dark'}
               onClick={() => {
                 setSelectedMovieId(movie.id)
                 setOpenMovieModal(!openMovieModal)
@@ -70,7 +78,10 @@ export default function PaginatedMovies() {
                   {movie.title}
                 </TitleMovie>
                 <Wrapper>
-                  <StarIcon sx={{ color: '#F5C518' }} fontSize="small" />
+                  <StarIcon
+                    sx={{ color: '#F5C518', width: '13px', height: '13px' }}
+                    fontSize="small"
+                  />
                   <Typography component="span" variant="subtitle2" color="white">
                     {movie.vote_average}
                   </Typography>
@@ -83,7 +94,8 @@ export default function PaginatedMovies() {
             onClick={handleNextClick}
             cursor="pointer"
             fontSize="large"
-            sx={{ display: page === totalPages - 1 ? 'none' : 'flex' }}
+            dark={themeLocalStorage === 'dark'}
+            shouldHide={page === totalPages - 1}
           />
         </PaginatedMoviesContainer>
       )}
