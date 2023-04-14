@@ -4,6 +4,7 @@ import { css } from '@mui/styled-engine'
 export const HeaderContainer = styled(Container)`
   ${({ theme }) => css`
     min-height: 80px;
+    margin-bottom: 50px;
     padding: 0 20px;
 
     display: flex;

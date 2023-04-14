@@ -78,6 +78,16 @@ async function highlightMovie() {
   return response.data
 }
 
+async function findMovie(movieName: string): Promise<unknown> {
+  const response = await axios.get(`${URL}/find-movie?movieName=${movieName}`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
 export const api = {
   registerUser,
   loginUser,
@@ -85,5 +95,6 @@ export const api = {
   updateUser,
   listMovies,
   getMovie,
-  highlightMovie
+  highlightMovie,
+  findMovie
 }

@@ -61,6 +61,12 @@ export const TitleMovie = styled(Typography)`
   text-overflow: ellipsis;
 `
 
+export const Wrapper = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`
+
 export const IconPrev = styled('svg')<IconProps>`
   ${({ theme, dark, shouldHide }) => css`
     position: absolute;
@@ -77,10 +83,4 @@ export const IconNext = styled('svg')<IconProps>`
     display: ${shouldHide ? 'none' : 'flex'};
     color: ${dark ? theme.palette.common.white : theme.palette.common.black};
   `}
-`
-
-export const Wrapper = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 3px;
 `

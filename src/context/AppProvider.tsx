@@ -12,6 +12,8 @@ type AppContextType = {
   setSelectedMovieId: (value: string) => void
   themeLocalStorage: string
   setThemeLocalStorage: (value: string) => void
+  searchQuery: string
+  setSearchQuery: (value: string) => void
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -24,7 +26,9 @@ export const AppContext = createContext<AppContextType>({
   selectedMovieId: '',
   setSelectedMovieId: () => {},
   themeLocalStorage: 'light',
-  setThemeLocalStorage: () => {}
+  setThemeLocalStorage: () => {},
+  searchQuery: '',
+  setSearchQuery: () => {}
 })
 
 export default function AppProvider({ children }: any) {
@@ -33,6 +37,7 @@ export default function AppProvider({ children }: any) {
   const [openMovieModal, setOpenMovieModal] = useState(false)
   const [selectedMovieId, setSelectedMovieId] = useState('')
   const [themeLocalStorage, setThemeLocalStorage] = useState(getItem('theme') || 'light')
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <AppContext.Provider
@@ -46,7 +51,9 @@ export default function AppProvider({ children }: any) {
         selectedMovieId,
         setSelectedMovieId,
         themeLocalStorage,
-        setThemeLocalStorage
+        setThemeLocalStorage,
+        searchQuery,
+        setSearchQuery
       }}
     >
       {children}
