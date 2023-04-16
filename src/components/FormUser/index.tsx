@@ -113,7 +113,7 @@ export default function FormUser({ close }: { close: () => void }) {
         <DefaultTextField
           name="newPassword"
           type="password"
-          label="Nova Senha"
+          label="Nova Senha (opcional)"
           register={register}
           errors={errors}
         />
@@ -121,7 +121,7 @@ export default function FormUser({ close }: { close: () => void }) {
         <DefaultTextField
           name="confirmNewPassword"
           type="password"
-          label="Confirmar Nova Senha"
+          label="Confirmar Nova Senha (opcional)"
           register={register}
           errors={errors}
         />

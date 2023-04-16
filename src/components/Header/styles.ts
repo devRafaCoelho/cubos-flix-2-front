@@ -16,7 +16,7 @@ export const HeaderContainer = styled(Container)`
 
     @media screen and (max-width: 615px) {
       padding: 10px;
-      flex-direction: column-reverse;
+      flex-direction: column;
       gap: 10px;
     }
   `}
@@ -53,4 +53,11 @@ export const IconChangeTheme = styled('svg')`
   height: 30px;
   color: white;
   cursor: pointer;
+`
+
+export const IconLike = styled('svg')`
+  ${({ theme }) => css`
+    cursor: pointer;
+    color: ${theme.palette.common.white};
+  `}
 `

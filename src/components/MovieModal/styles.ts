@@ -9,6 +9,10 @@ type BackgroundBoxProps = {
   average?: boolean
 }
 
+type IconLike = {
+  color: string
+}
+
 export const Icon = styled('svg')`
   font-size: 50px;
   position: absolute;
@@ -44,7 +48,7 @@ export const CustomBox = styled(Box)`
   justify-content: space-between;
 `
 
-export const BoxGengres = styled(Box)`
+export const Wrapper = styled(Box)`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -58,5 +62,14 @@ export const BackgroundBox = styled(Box)<BackgroundBoxProps>`
     justify-content: center;
     border-radius: 8px;
     background-color: ${average ? theme.palette.secondary.main : theme.palette.primary.main};
+  `}
+`
+
+export const IconLike = styled('svg')<IconLike>`
+  ${({ theme, color }) => css`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: ${color === 'white' ? theme.palette.common.white : theme.palette.error.main};
   `}
 `

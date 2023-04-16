@@ -4,7 +4,9 @@ import StarIcon from '@mui/icons-material/Star'
 import { Typography } from '@mui/material'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
+import MovieModal from '../MovieModal'
 import {
   IconNext,
   IconPrev,
@@ -14,8 +16,6 @@ import {
   TitleMovie,
   Wrapper
 } from './styles'
-import useAppContext from '../../hooks/useAppContex'
-import MovieModal from '../MovieModal'
 
 type MovieProps = {
   id: string
@@ -25,15 +25,19 @@ type MovieProps = {
 }
 
 export default function PaginatedMovies() {
-  const { data } = useQuery('movies-data', api.listMovies)
-  const [page, setPage] = useState(0)
   const {
     openMovieModal,
     setOpenMovieModal,
     selectedMovieId,
     setSelectedMovieId,
-    themeLocalStorage
+    themeLocalStorage,
+    searchQuery
   } = useAppContext()
+  const [page, setPage] = useState(0)
+  const { data } =
+    searchQuery === ''
+      ? useQuery('movies-data', api.listMovies)
+      : useQuery('find-movie', () => api.findMovie(searchQuery))
 
   const totalPages = Math.ceil((data?.results.length || 0) / 5)
 
@@ -42,11 +46,11 @@ export default function PaginatedMovies() {
   const filteredMovies = data?.results.slice(startIndex, endIndex)
 
   function handlePrevClick() {
-    setPage(page > 0 ? page - 1 : page)
+    setPage(Math.max(page - 1, 0))
   }
 
   function handleNextClick() {
-    setPage(page < totalPages - 1 ? page + 1 : page)
+    setPage(Math.min(page + 1, totalPages - 1))
   }
 
   return (
@@ -102,7 +106,6 @@ export default function PaginatedMovies() {
 
       {openMovieModal && selectedMovieId !== null && (
         <MovieModal
-          idMovie={selectedMovieId}
           close={() => {
             setSelectedMovieId('')
             setOpenMovieModal(!openMovieModal)

@@ -17,7 +17,6 @@ export default function ModalLogout({ close }: { close: () => void }) {
           <Button
             type="button"
             variant="outlined"
-            color="success"
             fullWidth
             onClick={() => {
               logOut()
@@ -26,7 +25,7 @@ export default function ModalLogout({ close }: { close: () => void }) {
           >
             Sim
           </Button>
-          <Button type="button" variant="outlined" color="error" fullWidth onClick={close}>
+          <Button type="button" variant="contained" fullWidth onClick={close}>
             Não
           </Button>
         </CustomBox>

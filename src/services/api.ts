@@ -10,6 +10,11 @@ type UserData = {
   password: string
 }
 
+type MovieData = {
+  movieId: string
+  movieName: string
+}
+
 async function registerUser(user: UserData): Promise<UserData> {
   const response = await axios.post(`${URL}/register`, user)
   return response.data
@@ -78,6 +83,46 @@ async function highlightMovie() {
   return response.data
 }
 
+async function findMovie(movieName: string): Promise<unknown> {
+  const response = await axios.get(`${URL}/find-movie?movieName=${movieName}`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
+async function addFavorites(movie: MovieData): Promise<MovieData> {
+  const response = await axios.post(`${URL}/favorites`, movie, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
+async function listFavorites(): Promise<MovieData[]> {
+  const response = await axios.get(`${URL}/favorites`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
+async function deleteFavorites(movieId: string): Promise<MovieData> {
+  const response = await axios.delete(`${URL}/favorites/${movieId}`, {
+    headers: {
+      Authorization: `Bearer ${getItem('token')}`
+    }
+  })
+
+  return response.data
+}
+
 export const api = {
   registerUser,
   loginUser,
@@ -85,5 +130,9 @@ export const api = {
   updateUser,
   listMovies,
   getMovie,
-  highlightMovie
+  highlightMovie,
+  findMovie,
+  addFavorites,
+  listFavorites,
+  deleteFavorites
 }
