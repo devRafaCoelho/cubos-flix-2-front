@@ -4,14 +4,18 @@ import { useQuery } from 'react-query'
 import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
 import SearchField from '../SearchField'
-import { CustomAvatar, CustomBox, HeaderContainer, IconLogout } from './styles'
+import { CustomAvatar, CustomBox, HeaderContainer, IconLike, IconLogout } from './styles'
 import { useEffect } from 'react'
 import { getItem, setItem } from '../../utils/storage'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import HomeIcon from '@mui/icons-material/Home'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
   const { openModalLogout, setOpenModalLogout, openUserForm, setOpenUserForm } = useAppContext()
   const { data } = useQuery('user-data', api.getUser)
   const { setThemeLocalStorage } = useAppContext()
+  const navigate = useNavigate()
 
   const avatar = data ? data.name.split(' ') : []
   const avatarInitials =
@@ -41,6 +45,8 @@ export default function Header() {
       </CustomBox>
 
       <CustomBox>
+        <IconLike as={HomeIcon} onClick={() => navigate('/home')} />
+        <IconLike as={FavoriteIcon} onClick={() => navigate('/favorites')} />
         <SearchField />
         <CustomAvatar onClick={() => setOpenUserForm(!openUserForm)}>
           <Typography component="h2" variant="h2">

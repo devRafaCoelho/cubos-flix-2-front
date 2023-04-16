@@ -7,6 +7,7 @@ import RegisterPage from './pages/Register'
 import { GlobalStyles } from './styles/GlobalStyles'
 import { theme } from './theme/theme'
 import { getItem } from './utils/storage'
+import FavoritesPage from './pages/Favorites'
 
 type ProtectedRoutesProps = {
   redirectTo: string
@@ -31,6 +32,7 @@ export default function MainRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoutes redirectTo="/login" />}>
             <Route path="/home" element={<HomePage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
           </Route>
         </Routes>
       </ThemeProvider>

@@ -106,7 +106,6 @@ export default function PaginatedMovies() {
 
       {openMovieModal && selectedMovieId !== null && (
         <MovieModal
-          idMovie={selectedMovieId}
           close={() => {
             setSelectedMovieId('')
             setOpenMovieModal(!openMovieModal)

@@ -4,7 +4,6 @@ import { css } from '@mui/styled-engine'
 export const HeaderContainer = styled(Container)`
   ${({ theme }) => css`
     min-height: 80px;
-    margin-bottom: 50px;
     padding: 0 20px;
 
     display: flex;
@@ -17,7 +16,7 @@ export const HeaderContainer = styled(Container)`
 
     @media screen and (max-width: 615px) {
       padding: 10px;
-      flex-direction: column-reverse;
+      flex-direction: column;
       gap: 10px;
     }
   `}
@@ -54,4 +53,11 @@ export const IconChangeTheme = styled('svg')`
   height: 30px;
   color: white;
   cursor: pointer;
+`
+
+export const IconLike = styled('svg')`
+  ${({ theme }) => css`
+    cursor: pointer;
+    color: ${theme.palette.common.white};
+  `}
 `

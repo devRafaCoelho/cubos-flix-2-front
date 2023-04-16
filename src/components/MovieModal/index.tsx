@@ -1,7 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Typography } from '@mui/material'
-import { useQuery } from 'react-query'
+import { useState } from 'react'
+import { useMutation, useQuery } from 'react-query'
+import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
 import { ContainerModal } from '../../styles/styles'
 import {
@@ -10,19 +12,44 @@ import {
   ContainerContent,
   CustomBox,
   Icon,
-  IconLikeBorder,
+  IconLike,
   Wrapper
 } from './styles'
-import { useState } from 'react'
 
 type MovieModalProps = {
-  idMovie: string
   close: () => void
 }
 
-export default function MovieModal({ idMovie, close }: MovieModalProps) {
-  const { data } = useQuery('movie-data', () => api.getMovie(idMovie))
+type MovieData = {
+  movieId: string
+  movieName: string
+  title?: string
+  backdrop_path?: string
+  overview?: string
+  genres?: { name: string }[]
+  vote_average?: number
+}
+
+export default function MovieModal({ close }: MovieModalProps) {
+  const { selectedMovieId } = useAppContext()
   const [color, setColor] = useState(false)
+
+  const { data } = useQuery('movie-data', () => api.getMovie(selectedMovieId || ''))
+
+  const { mutate } = useMutation(api.addFavorites, {
+    onSuccess: () => {
+      console.log('filme adicionado com sucesso!')
+    }
+  })
+
+  async function onSubmit(data: MovieData) {
+    mutate(data)
+  }
+
+  const movieData: MovieData = {
+    movieId: selectedMovieId ?? '',
+    movieName: data?.title ?? ''
+  }
 
   return (
     <ContainerModal maxWidth={false} disableGutters>
@@ -53,9 +80,12 @@ export default function MovieModal({ idMovie, close }: MovieModalProps) {
           </Wrapper>
 
           <Wrapper>
-            <IconLikeBorder
+            <IconLike
               as={FavoriteIcon}
-              onClick={() => setColor(!color)}
+              onClick={() => {
+                onSubmit(movieData)
+                setColor(!color)
+              }}
               color={color ? 'error' : 'white'}
             />
 

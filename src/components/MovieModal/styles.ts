@@ -9,7 +9,7 @@ type BackgroundBoxProps = {
   average?: boolean
 }
 
-type IconLikeBorder = {
+type IconLike = {
   color: string
 }
 
@@ -65,7 +65,7 @@ export const BackgroundBox = styled(Box)<BackgroundBoxProps>`
   `}
 `
 
-export const IconLikeBorder = styled('svg')<IconLikeBorder>`
+export const IconLike = styled('svg')<IconLike>`
   ${({ theme, color }) => css`
     width: 40px;
     height: 40px;
