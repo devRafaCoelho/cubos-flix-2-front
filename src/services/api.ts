@@ -11,8 +11,10 @@ type UserData = {
 }
 
 type MovieData = {
-  movieId: string
-  movieName: string
+  movie_id: string
+  poster_path: string
+  title: string
+  vote_average: number
 }
 
 async function registerUser(user: UserData): Promise<UserData> {
@@ -113,7 +115,7 @@ async function listFavorites(): Promise<MovieData[]> {
   return response.data
 }
 
-async function deleteFavorites(movieId: string): Promise<MovieData> {
+async function deleteFavorite(movieId: string): Promise<MovieData> {
   const response = await axios.delete(`${URL}/favorites/${movieId}`, {
     headers: {
       Authorization: `Bearer ${getItem('token')}`
@@ -134,5 +136,5 @@ export const api = {
   findMovie,
   addFavorites,
   listFavorites,
-  deleteFavorites
+  deleteFavorite
 }

@@ -5,13 +5,18 @@ import FormUser from '../../components/FormUser'
 import Header from '../../components/Header'
 import ModalLogout from '../../components/ModalLogout'
 import { Wrapper } from '../../components/MovieModal/styles'
-import { InfoContainer, MovieCard, TitleMovie } from '../../components/PaginatedMovies/styles'
 import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
-import { BackgroundContainer, HomeContainer } from './styles'
+import {
+  BackgroundContainer,
+  FavoritesContainer,
+  InfoContainer,
+  MovieCard,
+  TitleMovie
+} from './styles'
+import MovieModal from '../../components/MovieModal'
 
 type MovieProps = {
-  id: string
   title: string
   vote_average: number
   poster_path: string
@@ -24,17 +29,18 @@ export default function FavoritesPage() {
     openUserForm,
     setOpenUserForm,
     themeLocalStorage,
+    selectedMovieId,
     setSelectedMovieId,
+    openMovieModal,
     setOpenMovieModal
   } = useAppContext()
 
   const { data } = useQuery('favorites', api.listFavorites)
-  console.log(data)
 
   return (
     <BackgroundContainer dark={themeLocalStorage === 'dark'} maxWidth={false} disableGutters>
       <Header />
-      <HomeContainer maxWidth={false} disableGutters>
+      <FavoritesContainer maxWidth={false} disableGutters>
         {data?.map((movie: MovieProps) => (
           <MovieCard
             key={movie.id}
@@ -43,7 +49,7 @@ export default function FavoritesPage() {
             poster_path={movie.poster_path}
             dark={themeLocalStorage === 'dark'}
             onClick={() => {
-              setSelectedMovieId(movie.id)
+              setSelectedMovieId(movie.movie_id)
               setOpenMovieModal(!openMovieModal)
             }}
           >
@@ -63,7 +69,16 @@ export default function FavoritesPage() {
             </InfoContainer>
           </MovieCard>
         ))}
-      </HomeContainer>
+      </FavoritesContainer>
+
+      {openMovieModal && selectedMovieId !== null && (
+        <MovieModal
+          close={() => {
+            setSelectedMovieId('')
+            setOpenMovieModal(!openMovieModal)
+          }}
+        />
+      )}
 
       {openModalLogout && <ModalLogout close={() => setOpenModalLogout(!openModalLogout)} />}
       {openUserForm && <FormUser close={() => setOpenUserForm(!openUserForm)} />}

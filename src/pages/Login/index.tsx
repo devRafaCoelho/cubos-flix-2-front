@@ -10,7 +10,6 @@ import { api } from '../../services/api'
 import { FormContainer, MainContainer } from '../../styles/styles'
 
 type UserData = {
-  id: number
   email: string
   password: string
 }
@@ -84,7 +83,7 @@ export default function LoginPage() {
           errors={errors}
         />
 
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" fullWidth>
           <Typography component="span" variant="body1">
             Entrar
           </Typography>

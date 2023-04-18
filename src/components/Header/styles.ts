@@ -55,7 +55,13 @@ export const IconChangeTheme = styled('svg')`
   cursor: pointer;
 `
 
-export const IconLike = styled('svg')`
+export const IconHome = styled('svg')`
+  ${({ theme }) => css`
+    cursor: pointer;
+    color: ${theme.palette.common.white};
+  `}
+`
+export const IconFavorite = styled('svg')`
   ${({ theme }) => css`
     cursor: pointer;
     color: ${theme.palette.common.white};

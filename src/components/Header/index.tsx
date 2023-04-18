@@ -1,21 +1,39 @@
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import HomeIcon from '@mui/icons-material/Home'
+import HomeIconOutlined from '@mui/icons-material/HomeOutlined'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Switch, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
+import { useNavigate, useLocation } from 'react-router-dom'
 import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
-import SearchField from '../SearchField'
-import { CustomAvatar, CustomBox, HeaderContainer, IconLike, IconLogout } from './styles'
-import { useEffect } from 'react'
 import { getItem, setItem } from '../../utils/storage'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import HomeIcon from '@mui/icons-material/Home'
-import { useNavigate } from 'react-router-dom'
+import SearchField from '../SearchField'
+import {
+  CustomAvatar,
+  CustomBox,
+  HeaderContainer,
+  IconFavorite,
+  IconHome,
+  IconLogout
+} from './styles'
 
 export default function Header() {
-  const { openModalLogout, setOpenModalLogout, openUserForm, setOpenUserForm } = useAppContext()
-  const { data } = useQuery('user-data', api.getUser)
-  const { setThemeLocalStorage } = useAppContext()
+  const {
+    setUserData,
+    openModalLogout,
+    setOpenModalLogout,
+    openUserForm,
+    setOpenUserForm,
+    setThemeLocalStorage
+  } = useAppContext()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [status, setStatus] = useState(location.pathname === '/home')
+
+  const { data } = useQuery('user-data', api.getUser)
 
   const avatar = data ? data.name.split(' ') : []
   const avatarInitials =
@@ -23,17 +41,24 @@ export default function Header() {
       ? avatar[0].charAt(0).toUpperCase() + avatar[1].charAt(0).toUpperCase()
       : avatar[0]?.charAt(0).toUpperCase()
 
-  useEffect(() => {
-    setOpenModalLogout(false)
-    setOpenUserForm(false)
-  }, [])
-
   function handleTheme() {
     const theme = getItem('theme') === 'light' ? 'dark' : 'light'
 
     setItem('theme', theme)
     setThemeLocalStorage(theme)
   }
+
+  function handleNavigation(route: string) {
+    setStatus(route === '/home')
+    navigate(route)
+  }
+
+  useEffect(() => {
+    setOpenModalLogout(false)
+    setOpenUserForm(false)
+    setStatus(location.pathname === '/home')
+    setUserData(data)
+  }, [location.pathname])
 
   return (
     <HeaderContainer maxWidth={false} disableGutters>
@@ -45,8 +70,14 @@ export default function Header() {
       </CustomBox>
 
       <CustomBox>
-        <IconLike as={HomeIcon} onClick={() => navigate('/home')} />
-        <IconLike as={FavoriteIcon} onClick={() => navigate('/favorites')} />
+        <IconHome
+          as={status ? HomeIcon : HomeIconOutlined}
+          onClick={() => handleNavigation('/home')}
+        />
+        <IconFavorite
+          as={status ? FavoriteBorderIcon : FavoriteIcon}
+          onClick={() => handleNavigation('/favorites')}
+        />
         <SearchField />
         <CustomAvatar onClick={() => setOpenUserForm(!openUserForm)}>
           <Typography component="h2" variant="h2">

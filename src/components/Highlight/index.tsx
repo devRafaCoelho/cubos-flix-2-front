@@ -25,6 +25,7 @@ export default function Highlight() {
       >
         Highlight do dia
       </Typography>
+
       <BoxWrapper>
         <BoxTrailer backgroundImage={data?.backgroundImage} onClick={handleClick}>
           <IconPlay as={SmartDisplayIcon} />
