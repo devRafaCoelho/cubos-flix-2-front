@@ -34,11 +34,21 @@ export const ContainerContent = styled(Container)`
 export const BoxImage = styled(Box)<BoxImageProps>`
   width: 100%;
   min-height: 415px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-image: ${({ backdrop_path }) =>
     `url(http://image.tmdb.org/t/p/original/${backdrop_path})`};
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+`
+
+export const IconPlay = styled('svg')`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  color: ${({ theme }) => theme.palette.common.white};
 `
 
 export const CustomBox = styled(Box)`
@@ -65,11 +75,20 @@ export const BackgroundBox = styled(Box)<BackgroundBoxProps>`
   `}
 `
 
-export const IconLike = styled('svg')<IconLike>`
+export const IconFavorite = styled('svg')<IconLike>`
   ${({ theme, color }) => css`
     width: 40px;
     height: 40px;
     cursor: pointer;
     color: ${color === 'white' ? theme.palette.common.white : theme.palette.error.main};
+  `}
+`
+
+export const IconDeleteFavorite = styled('svg')`
+  ${({ theme }) => css`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: ${theme.palette.common.white};
   `}
 `

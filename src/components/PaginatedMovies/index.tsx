@@ -1,5 +1,5 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import StarIcon from '@mui/icons-material/Star'
 import { Typography } from '@mui/material'
 import { useState } from 'react'
@@ -58,13 +58,14 @@ export default function PaginatedMovies() {
       {filteredMovies && (
         <PaginatedMoviesContainer maxWidth={false} disableGutters>
           <IconPrev
-            as={ArrowBackIcon}
+            as={ArrowBackIosIcon}
             onClick={handlePrevClick}
             cursor="pointer"
             fontSize="large"
             dark={themeLocalStorage === 'dark'}
             shouldHide={page === 0}
           />
+
           {filteredMovies.map((movie: MovieProps) => (
             <MovieCard
               key={movie.id}
@@ -93,8 +94,9 @@ export default function PaginatedMovies() {
               </InfoContainer>
             </MovieCard>
           ))}
+
           <IconNext
-            as={ArrowForwardIcon}
+            as={ArrowForwardIosIcon}
             onClick={handleNextClick}
             cursor="pointer"
             fontSize="large"

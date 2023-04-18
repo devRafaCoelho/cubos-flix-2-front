@@ -1,8 +1,11 @@
+import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import SmartDisplayIcon from '@mui/icons-material/SmartDisplay'
 import { Typography } from '@mui/material'
-import { useState } from 'react'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useLocation } from 'react-router-dom'
 import useAppContext from '../../hooks/useAppContex'
 import { api } from '../../services/api'
 import { ContainerModal } from '../../styles/styles'
@@ -12,7 +15,9 @@ import {
   ContainerContent,
   CustomBox,
   Icon,
-  IconLike,
+  IconDeleteFavorite,
+  IconFavorite,
+  IconPlay,
   Wrapper
 } from './styles'
 
@@ -20,35 +25,56 @@ type MovieModalProps = {
   close: () => void
 }
 
-type MovieData = {
-  movieId: string
-  movieName: string
-  title?: string
-  backdrop_path?: string
-  overview?: string
-  genres?: { name: string }[]
-  vote_average?: number
+type MovieDataPost = {
+  userId: number
+  movie_id: string
+  poster_path: string
+  title: string
+  vote_average: number
 }
 
 export default function MovieModal({ close }: MovieModalProps) {
-  const { selectedMovieId } = useAppContext()
-  const [color, setColor] = useState(false)
+  const { userData, selectedMovieId } = useAppContext()
+  const location = useLocation()
 
   const { data } = useQuery('movie-data', () => api.getMovie(selectedMovieId || ''))
+  const { data: favoritesData } = useQuery('favorites', api.listFavorites)
+
+  const queryClient = useQueryClient()
 
   const { mutate } = useMutation(api.addFavorites, {
     onSuccess: () => {
-      console.log('filme adicionado com sucesso!')
+      queryClient.invalidateQueries('favorites')
     }
   })
 
-  async function onSubmit(data: MovieData) {
+  const { mutate: deleteFavorite } = useMutation(api.deleteFavorite, {
+    onSuccess: () => {
+      close()
+      queryClient.invalidateQueries('favorites')
+    }
+  })
+
+  async function handleAdd(data: MovieDataPost) {
     mutate(data)
   }
 
-  const movieData: MovieData = {
-    movieId: selectedMovieId ?? '',
-    movieName: data?.title ?? ''
+  async function handleDelete(data: MovieDataPost) {
+    deleteFavorite(data)
+  }
+
+  const movieData: MovieDataPost = {
+    userId: userData?.id,
+    movie_id: (selectedMovieId ?? '').toString(),
+    poster_path: data?.poster_path || '',
+    title: data?.title ?? '',
+    vote_average: data?.vote_average || 0
+  }
+
+  const handleClick = () => {
+    if (data?.linkVideo) {
+      window.open(data.linkVideo, '_blank')
+    }
   }
 
   return (
@@ -60,7 +86,11 @@ export default function MovieModal({ close }: MovieModalProps) {
           {data?.title}
         </Typography>
 
-        <BoxImage backdrop_path={data?.backdrop_path} />
+        <BoxImage backdrop_path={data?.backdrop_path}>
+          <IconPlay cursor="pointer">
+            <SmartDisplayIcon onClick={handleClick} />
+          </IconPlay>
+        </BoxImage>
 
         <Typography component="p" variant="body2" color="white">
           {data?.overview}
@@ -80,14 +110,20 @@ export default function MovieModal({ close }: MovieModalProps) {
           </Wrapper>
 
           <Wrapper>
-            <IconLike
-              as={FavoriteIcon}
-              onClick={() => {
-                onSubmit(movieData)
-                setColor(!color)
-              }}
-              color={color ? 'error' : 'white'}
-            />
+            {location.pathname !== '/favorites' ? (
+              favoritesData?.some(
+                (favorite: any) => Number(favorite.movie_id) === selectedMovieId
+              ) ? (
+                <IconFavorite as={FavoriteIcon} color="red" />
+              ) : (
+                <IconFavorite as={AddIcon} color="white" onClick={() => handleAdd(movieData)} />
+              )
+            ) : (
+              <IconDeleteFavorite
+                as={DeleteIcon}
+                onClick={() => handleDelete(movieData?.movie_id)}
+              />
+            )}
 
             <BackgroundBox average>
               <Typography component="span" variant="h4" color="white">

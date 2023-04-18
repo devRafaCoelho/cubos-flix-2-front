@@ -18,6 +18,7 @@ export const HighlightContainer = styled(Container)`
 
 export const BoxWrapper = styled(Box)`
   width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,8 +27,7 @@ export const BoxWrapper = styled(Box)`
 export const BoxTrailer = styled(Box)<BoxTrailerProps>`
   ${({ backgroundImage }) => css`
     width: 55%;
-    height: 311px;
-
+    min-height: 311px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,7 +48,7 @@ export const IconPlay = styled('svg')`
 export const BoxContent = styled(Box)<BoxContentProps>`
   ${({ theme, dark }) => css`
     width: 40%;
-    height: 311px;
+    min-height: 311px;
     padding: 16px;
     background-color: ${dark ? theme.palette.grey[600] : theme.palette.common.white};
     box-shadow: 0px 4px 4px ${dark ? theme.palette.grey[600] : theme.palette.grey[900]};
